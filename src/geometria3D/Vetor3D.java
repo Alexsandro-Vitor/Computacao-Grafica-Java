@@ -50,4 +50,13 @@ public class Vetor3D {
 	public Vetor3D normalizado() {
 		return (modulo() != 0) ? div(modulo()) : Vetor3D.ZERO;
 	}
+	
+	public Vetor3D transformacao(double[][] matriz, double pontoOuVetor) {
+		double x = matriz[0][0] * this.x + matriz[0][1] * this.y + matriz[0][2] * this.z + matriz[0][3] * pontoOuVetor;
+		double y = matriz[1][0] * this.x + matriz[1][1] * this.y + matriz[1][2] * this.z + matriz[1][3] * pontoOuVetor;
+		double z = matriz[2][0] * this.x + matriz[2][1] * this.y + matriz[2][2] * this.z + matriz[2][3] * pontoOuVetor;
+		System.out.println("Antes: "+this.x+", "+this.y+", "+this.z);
+		System.out.println("Depois: "+x+", "+y+", "+z);
+		return new Vetor3D(x, y, z);
+	}
 }

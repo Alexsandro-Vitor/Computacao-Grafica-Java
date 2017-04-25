@@ -21,6 +21,17 @@ public class Triangulo3D {
 		return new Triangulo3D(a.sub(v), b.sub(v), c.sub(v));
 	}
 	
+	public Triangulo3D rotacaoY(double angulo) {
+		double[][] transformacao = {{Math.cos(angulo), 0, Math.sin(angulo), 0}, {0, 1, 0, 0}, {-Math.sin(angulo), 0, Math.cos(angulo), 0}};
+		System.out.println("{"+transformacao[0][0]+", "+transformacao[0][1]+", "+transformacao[0][2]+", "+transformacao[0][3]+"}");
+		System.out.println("{"+transformacao[1][0]+", "+transformacao[1][1]+", "+transformacao[1][2]+", "+transformacao[1][3]+"}");
+		System.out.println("{"+transformacao[2][0]+", "+transformacao[2][1]+", "+transformacao[2][2]+", "+transformacao[2][3]+"}");
+		Vetor3D a = this.a.transformacao(transformacao, Vetor3D.PONTO);
+		Vetor3D b = this.b.transformacao(transformacao, Vetor3D.PONTO);
+		Vetor3D c = this.c.transformacao(transformacao, Vetor3D.PONTO);
+		return new Triangulo3D(a, b, c);
+	}
+	
 	public Vetor3D colisao(Vetor3D v, boolean print) {
 		Vetor3D normal = normal();
 		normal = Vetor3D.ZERO.sub(normal);
