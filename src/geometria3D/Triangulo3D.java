@@ -3,7 +3,7 @@ package geometria3D;
 import auxiliar.*;
 
 public class Triangulo3D {
-	private Vetor3D a, b, c;
+	public Vetor3D a, b, c;
 	
 	public Triangulo3D(Vetor3D a, Vetor3D b, Vetor3D c) {
 		this.a = a;
@@ -33,7 +33,7 @@ public class Triangulo3D {
 	}
 	
 	private boolean contido(Vetor3D p, boolean print) {
-		Vetor3D[] solucao = Linha3.solucionar(new Linha3(a, 1, 0, 0), new Linha3(b, 0, 1, 0), new Linha3(c, 0, 0, 1));
+		Vetor3D[] solucao = Linha6.solucionar(new Linha6(a, 1, 0, 0), new Linha6(b, 0, 1, 0), new Linha6(c, 0, 0, 1));
 		//if (print) System.out.println("Solucao[0] = "+solucao[0].x+", "+solucao[0].y+", "+solucao[0].z);
 		//if (print) System.out.println("Solucao[1] = "+solucao[1].x+", "+solucao[1].y+", "+solucao[1].z);
 		//if (print) System.out.println("Solucao[2] = "+solucao[2].x+", "+solucao[2].y+", "+solucao[2].z);

@@ -1,5 +1,8 @@
 package geometria3D;
 
+import auxiliar.Linha6;
+import auxiliar.Linha8;
+
 public class Camera {
 	private Vetor3D c;
 	private Vetor3D n, v;
@@ -21,8 +24,14 @@ public class Camera {
 	}
 	
 	public void verTriangulo(Triangulo3D t) {
-		t.translacao(Vetor3D.ZERO.sub(c));
-		rastreamento(t);
+		t = t.translacao(c);
+		//t.rotacaoY(Math.atan(v.x/v.z));
+		System.out.println(t.a.x+", "+t.a.y+", "+t.a.z);
+		System.out.println(c.x+", "+c.y+", "+c.z);
+		System.out.println(n.x+", "+n.y+", "+n.z);
+		System.out.println(v.x+", "+v.y+", "+v.z);
+		System.out.println(Math.atan(1000000000000.0));
+		rastreamento(t); 
 	}
 	
 	public void rastreamento(Triangulo3D t) {

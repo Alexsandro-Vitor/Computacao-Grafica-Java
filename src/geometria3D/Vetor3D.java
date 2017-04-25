@@ -2,6 +2,8 @@ package geometria3D;
 
 public class Vetor3D {
 	public static final Vetor3D ZERO = new Vetor3D(0, 0, 0);
+	public static final int VETOR = 0;
+	public static final int PONTO = 1;
 	
 	public double x, y, z;
 	
