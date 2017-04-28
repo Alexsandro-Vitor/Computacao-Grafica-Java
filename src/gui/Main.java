@@ -155,7 +155,7 @@ public class Main extends JFrame {
 		Vetor3D c = new Vetor3D(Double.parseDouble(txtCx.getText()), Double.parseDouble(txtCy.getText()), Double.parseDouble(txtCz.getText()));
 		Vetor3D n = new Vetor3D(Double.parseDouble(txtNx.getText()), Double.parseDouble(txtNy.getText()), Double.parseDouble(txtNz.getText()));
 		Vetor3D v = new Vetor3D(Double.parseDouble(txtVx.getText()), Double.parseDouble(txtVy.getText()), Double.parseDouble(txtVz.getText()));
-		Camera camera = new Camera(c, n, v, 1, 1, 1, (short)200, (short)200);
+		Camera camera = new Camera(c, n, v, 1, 1, (short)200, (short)200);
 		Triangulo3D t = new Triangulo3D(new Vetor3D(0, 0, -1), new Vetor3D(1, -1, -1), new Vetor3D(-1, -1, -1));//Prototipo
 		camera.verTriangulo(t);
 		BufferedImage buffer = new BufferedImage(camera.xTela, camera.yTela, BufferedImage.TYPE_INT_ARGB);

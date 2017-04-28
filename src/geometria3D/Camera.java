@@ -1,32 +1,103 @@
 package geometria3D;
 
+/**
+ * Classe que representa uma câmera que vê objetos tridimensionais
+ * @since v0.2.0
+ * @author Alexsandro Vítor Serafim de Carvalho - avsc@cin.ufpe.br
+ */
 public class Camera {
+	/**
+	 * Posição da câmera no espaço
+	 */
 	private Vetor3D c;
-	private Vetor3D n, v, r;
-	private double hX, hY;
-	public final short xTela, yTela;
+	
+	/**
+	 * Vetor que aponta para acima da câmera
+	 */
+	private Vetor3D n;
+	
+	/**
+	 * Vetor que representa a orientação da câmera
+	 */
+	private Vetor3D v;
+	
+	/**
+	 * Vetor que aponta para a direita da câmera
+	 */
+	private Vetor3D r;
+	
+	/**
+	 * Alcance horizontal da câmera
+	 */
+	private double hX;
+	
+	/**
+	 * Alcance vertical da câmera
+	 */
+	private double hY;
+	
+	/**
+	 * Largura da tela, em pixels
+	 */
+	public final short xTela;
+	
+	/**
+	 * Altura da tela, em pixels
+	 */
+	public final short yTela;
+	
+	/**
+	 * Matriz que representa as cores de cada pixel da tela
+	 */
 	public int[][] tela;
+	
+	/**
+	 * Matriz que armazena a distancia da câmera para cada ponto exibido na tela
+	 */
 	private double[][] zBuffer;
 	
-	public Camera(Vetor3D c, Vetor3D n, Vetor3D v, double hX, double hY, double d, short xTela, short yTela) {
+	/**
+	 * Cria uma câmera com cada um dos atributos abaixo.
+	 * @param c Posição da câmera
+	 * @param n Para onde o topo da câmera aponta
+	 * @param v Para onde a câmera aponta
+	 * @param hX Alcance horizontal da câmera
+	 * @param hY Alcance vertical da câmera
+	 * @param xTela Largura da tela, em pixels
+	 * @param yTela Altura da tela, em pixels
+	 * @since v0.2.0
+	 * @see Vetor3D
+	 */
+	public Camera(Vetor3D c, Vetor3D n, Vetor3D v, double hX, double hY, short xTela, short yTela) {
 		this.c = c;
 		this.v = v.normalizado();
-		this.n = n.sub(n.projetarSobre(v)).normalizado();	//Este vetor aponta para acima da camera
-		this.r = v.prodVetorial(n).normalizado();			//Este vetor aponta para a direita da camera
-		this.hX = hX / d;
-		this.hY = hY / d;
+		this.n = n.sub(n.projetarSobre(v)).normalizado();
+		this.r = v.prodVetorial(n).normalizado();
+		this.hX = hX;
+		this.hY = hY;
 		this.xTela = xTela;
 		this.yTela = yTela;
 		tela = new int[xTela][yTela];
 		zBuffer = new double[xTela][yTela];
 	}
 	
+	/**
+	 * Exibe um triângulo na tela
+	 * @param t O triângulo a ser exibido
+	 * @since v0.2.0
+	 * @see Triangulo3D
+	 */
 	public void verTriangulo(Triangulo3D t) {
 		t = t.translacao(c);
 		rastreamento(t);
 	}
 	
-	public void rastreamento(Triangulo3D t) {
+	/**
+	 * Para cada pixel da tela, checa se algum ponto do triângulo deve aparecer nele
+	 * @param t O triângulo a ser exibido
+	 * @since v0.2.0
+	 */
+	private void rastreamento(Triangulo3D t) {
 		for (int i = 0; i < xTela; i++) {
 			for (int j = 0; j < yTela; j++) {
 				Vetor3D x = r.mult((2 * ((double)i / xTela) - 1) * hX);
