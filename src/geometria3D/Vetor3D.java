@@ -59,4 +59,8 @@ public class Vetor3D {
 		System.out.println("Depois: "+x+", "+y+", "+z);
 		return new Vetor3D(x, y, z);
 	}
+	
+	public String toString(String nome) {
+		return nome + " = (" + this.x + ", " + this.y + ", " + this.z + ")";
+	}
 }
