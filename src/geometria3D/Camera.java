@@ -11,8 +11,8 @@ public class Camera {
 	public Camera(Vetor3D c, Vetor3D n, Vetor3D v, double hX, double hY, double d, short xTela, short yTela) {
 		this.c = c;
 		this.v = v.normalizado();
-		this.n = n.sub(n.projetarSobre(v)).normalizado();
-		this.r = v.prodVetorial(n).normalizado(); 	//Este vetor aponta para a direita da camera
+		this.n = n.sub(n.projetarSobre(v)).normalizado();	//Este vetor aponta para acima da camera
+		this.r = v.prodVetorial(n).normalizado();			//Este vetor aponta para a direita da camera
 		this.hX = hX / d;
 		this.hY = hY / d;
 		this.xTela = xTela;
@@ -23,11 +23,6 @@ public class Camera {
 	
 	public void verTriangulo(Triangulo3D t) {
 		t = t.translacao(c);
-		//System.out.println(t.a.x+", "+t.a.y+", "+t.a.z);
-		//System.out.println(c.x+", "+c.y+", "+c.z);
-		//System.out.println(n.x+", "+n.y+", "+n.z);
-		//System.out.println(v.x+", "+v.y+", "+v.z);
-		//System.out.println(Math.toDegrees(Math.atan(v.x/v.z)));
 		rastreamento(t);
 	}
 	
@@ -42,12 +37,6 @@ public class Camera {
 					tela[i][j] = Integer.MAX_VALUE;
 					zBuffer[i][j] = ponto.z;
 				}
-				/*if (i == 0 && j == 0) {
-					Vetor3D temp = new Vetor3D((2 * ((double)i / xTela) - 1) * hX, (1 - 2 * ((double)j / yTela)) * hY, -1);
-					System.out.println("Mira: "+temp.x+", "+temp.y+", "+temp.z);
-					System.out.println("Ponto: "+ponto.x+", "+ponto.y+", "+ponto.z);
-					System.out.printf("tela[%3d][%3d] = %d\n", i, j, tela[i][j]);
-				}*/
 			}
 		}
 	}
