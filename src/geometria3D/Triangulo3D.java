@@ -32,24 +32,38 @@ public class Triangulo3D {
 		return new Triangulo3D(a, b, c);
 	}
 	
-	public Vetor3D colisao(Vetor3D v, boolean print) {
+	public Vetor3D colisao(Vetor3D v) {
 		Vetor3D normal = normal();
 		normal = Vetor3D.ZERO.sub(normal);
 		Linha4 plano = new Linha4(normal, a);
 		Linha4 retaA = new Linha4(0, v.z, -v.y, 0);
 		Linha4 retaB = new Linha4(v.z, 0, -v.x, 0);
 		Vetor3D ponto = Linha4.solucionar(plano, retaA, retaB);
-		//if (print) System.out.println("Ponto"+ponto.x+", "+ponto.y+", "+ponto.z);
-		return contido(ponto, print) ? ponto : null;
+		return contido(ponto) ? ponto : null;
 	}
 	
-	private boolean contido(Vetor3D p, boolean print) {
+	private boolean contido(Vetor3D p) {
 		Vetor3D[] solucao = Linha6.solucionar(new Linha6(a, 1, 0, 0), new Linha6(b, 0, 1, 0), new Linha6(c, 0, 0, 1));
-		//if (print) System.out.println("Solucao[0] = "+solucao[0].x+", "+solucao[0].y+", "+solucao[0].z);
-		//if (print) System.out.println("Solucao[1] = "+solucao[1].x+", "+solucao[1].y+", "+solucao[1].z);
-		//if (print) System.out.println("Solucao[2] = "+solucao[2].x+", "+solucao[2].y+", "+solucao[2].z);
 		Vetor3D pesos = solucao[0].mult(p.x).soma(solucao[1].mult(p.y).soma(solucao[2].mult(p.z)));
-		//if (print) System.out.println("Pesos"+pesos.x+", "+pesos.y+", "+pesos.z);
-		return Metodos.de0a1(pesos);
+		return de0a1(pesos);
+	}
+	
+	/**
+	 * Checa se as dimensões x, y, e z do Vetor3D estão contidas no intervalo [0, 1]
+	 * @param v O Vetor3D que será analisado
+	 * @return true, se as 3 dimensões estiverem dentro do intervalo;
+	 * false, se uma delas não estiver no intervalo
+	 */
+	private static boolean de0a1(Vetor3D v) {
+		return de0a1(v.x) && de0a1(v.y) && de0a1(v.z);
+	}
+	
+	/**
+	 * Checa se um valor está contido no intervalo [0, 1]
+	 * @param i O valor a ser analisado 
+	 * @return true se i estiver contido em [0, 1]; false, se não estiver
+	 */
+	private static boolean de0a1(double i) {
+		return 0 <= i && i <= 1;
 	}
 }

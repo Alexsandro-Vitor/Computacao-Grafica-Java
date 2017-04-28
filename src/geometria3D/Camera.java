@@ -31,10 +31,10 @@ public class Camera {
 			for (int j = 0; j < yTela; j++) {
 				Vetor3D x = r.mult((2 * ((double)i / xTela) - 1) * hX);
 				Vetor3D y = n.mult((1 - 2 * ((double)j / yTela)) * hY);
-				Vetor3D ponto = t.colisao(v.soma(x).soma(y), i == 0 && j == 0);
+				Vetor3D ponto = t.colisao(v.soma(x).soma(y));
 				//Iluminação e definição da cor do ponto
 				if (ponto != null && (zBuffer[i][j] == 0 || zBuffer[i][j] > ponto.z) && ponto.z <= 0) {
-					tela[i][j] = Integer.MAX_VALUE;
+					tela[i][j] = -1;
 					zBuffer[i][j] = ponto.z;
 				}
 			}
