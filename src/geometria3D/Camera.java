@@ -1,58 +1,60 @@
 package geometria3D;
 
+import luz.Luzes;
+
 /**
- * Classe que representa uma câmera que vê objetos tridimensionais
+ * Classe que representa uma câmera que vê objetos tridimensionais.
  * @since v0.2.0
  * @author Alexsandro Vítor Serafim de Carvalho - avsc@cin.ufpe.br
  */
 public class Camera {
 	/**
-	 * Posição da câmera no espaço
+	 * Posição da câmera no espaço.
 	 */
 	private Vetor3D c;
 	
 	/**
-	 * Vetor que aponta para acima da câmera
+	 * Vetor que aponta para acima da câmera.
 	 */
 	private Vetor3D n;
 	
 	/**
-	 * Vetor que representa a orientação da câmera
+	 * Vetor que representa a orientação da câmera.
 	 */
 	private Vetor3D v;
 	
 	/**
-	 * Vetor que aponta para a direita da câmera
+	 * Vetor que aponta para a direita da câmera.
 	 */
 	private Vetor3D r;
 	
 	/**
-	 * Alcance horizontal da câmera
+	 * Alcance horizontal da câmera.
 	 */
 	private double hX;
 	
 	/**
-	 * Alcance vertical da câmera
+	 * Alcance vertical da câmera.
 	 */
 	private double hY;
 	
 	/**
-	 * Largura da tela, em pixels
+	 * Largura da tela, em pixels.
 	 */
 	public final short xTela;
 	
 	/**
-	 * Altura da tela, em pixels
+	 * Altura da tela, em pixels.
 	 */
 	public final short yTela;
 	
 	/**
-	 * Matriz que representa as cores de cada pixel da tela
+	 * Matriz que representa as cores de cada pixel da tela.
 	 */
 	public int[][] tela;
 	
 	/**
-	 * Matriz que armazena a distancia da câmera para cada ponto exibido na tela
+	 * Matriz que armazena a distancia da câmera para cada ponto exibido na tela.
 	 */
 	private double[][] zBuffer;
 	
@@ -65,7 +67,6 @@ public class Camera {
 	 * @param hY Alcance vertical da câmera
 	 * @param xTela Largura da tela, em pixels
 	 * @param yTela Altura da tela, em pixels
-	 * @since v0.2.0
 	 * @see Vetor3D
 	 */
 	public Camera(Vetor3D c, Vetor3D n, Vetor3D v, double hX, double hY, short xTela, short yTela) {
@@ -82,30 +83,28 @@ public class Camera {
 	}
 	
 	/**
-	 * Exibe um triângulo na tela
+	 * Exibe um triângulo na tela.
 	 * @param t O triângulo a ser exibido
-	 * @since v0.2.0
 	 * @see Triangulo3D
 	 */
-	public void verTriangulo(Triangulo3D t) {
+	public void verTriangulo(Triangulo3D t, Luzes luzes) {
 		t = t.translacao(c);
-		rastreamento(t);
+		rastreamento(t, luzes);
 	}
 	
 	/**
-	 * Para cada pixel da tela, checa se algum ponto do triângulo deve aparecer nele
+	 * Para cada pixel da tela, checa se algum ponto do triângulo deve aparecer nele.
 	 * @param t O triângulo a ser exibido
-	 * @since v0.2.0
 	 */
-	private void rastreamento(Triangulo3D t) {
+	private void rastreamento(Triangulo3D t, Luzes luzes) {
 		for (int i = 0; i < xTela; i++) {
 			for (int j = 0; j < yTela; j++) {
 				Vetor3D x = r.mult((2 * ((double)i / xTela) - 1) * hX);
 				Vetor3D y = n.mult((1 - 2 * ((double)j / yTela)) * hY);
 				Vetor3D ponto = t.colisao(v.soma(x).soma(y));
-				//Iluminação e definição da cor do ponto
+				//Iluminação e definição da luz do ponto
 				if (ponto != null && (zBuffer[i][j] == 0 || zBuffer[i][j] > ponto.z) && ponto.z <= 0) {
-					tela[i][j] = -1;
+					tela[i][j] = luzes.iluminar(ponto, t.normal(), t.cor).toInt();
 					zBuffer[i][j] = ponto.z;
 				}
 			}

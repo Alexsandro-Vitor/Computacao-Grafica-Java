@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import geometria3D.*;
+import luz.Cor;
+import luz.LuzPonto;
+import luz.Luzes;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -155,9 +158,16 @@ public class Main extends JFrame {
 		Vetor3D c = new Vetor3D(Double.parseDouble(txtCx.getText()), Double.parseDouble(txtCy.getText()), Double.parseDouble(txtCz.getText()));
 		Vetor3D n = new Vetor3D(Double.parseDouble(txtNx.getText()), Double.parseDouble(txtNy.getText()), Double.parseDouble(txtNz.getText()));
 		Vetor3D v = new Vetor3D(Double.parseDouble(txtVx.getText()), Double.parseDouble(txtVy.getText()), Double.parseDouble(txtVz.getText()));
-		Camera camera = new Camera(c, n, v, 1, 1, (short)200, (short)200);
-		Triangulo3D t = new Triangulo3D(new Vetor3D(0, 0, -1), new Vetor3D(1, -1, -1), new Vetor3D(-1, -1, -1));//Prototipo
-		camera.verTriangulo(t);
+		Camera camera = new Camera(c, n, v, 1, 1, (short)lblImagem.getWidth(), (short)lblImagem.getHeight());
+		//Prototipo
+		Triangulo3D t = new Triangulo3D(new Vetor3D(0, 0, -5), new Vetor3D(5, -5, -5), new Vetor3D(-5, -5, -5), Cor.AMARELO);
+		double kDifuso = 1;
+		LuzPonto[] luz = {new LuzPonto(new Vetor3D(5, -5, -2), Cor.VERMELHO, kDifuso),
+				new LuzPonto(new Vetor3D(-5, -5, -2), Cor.VERDE, kDifuso),
+				new LuzPonto(new Vetor3D(0, 0, -2), Cor.AZUL, kDifuso)};
+		Luzes luzes = new Luzes(Cor.PRETO, luz);
+		camera.verTriangulo(t, luzes);
+		
 		BufferedImage buffer = new BufferedImage(camera.xTela, camera.yTela, BufferedImage.TYPE_INT_ARGB);
 		buffer.setRGB(0, 0, camera.xTela, camera.yTela, matrizParaArray(camera), 0, camera.xTela);
 		lblImagem.setIcon(new ImageIcon(buffer));
