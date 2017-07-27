@@ -83,28 +83,32 @@ public class Camera {
 	}
 	
 	/**
-	 * Exibe um triângulo na tela.
-	 * @param t O triângulo a ser exibido
-	 * @see Triangulo3D
+	 * Exibe uma forma na tela.
+	 * @param t A forma a ser exibida
+	 * @see Forma3D
 	 */
-	public void verTriangulo(Triangulo3D t, Luzes luzes) {
-		t = t.translacao(c);
-		rastreamento(t, luzes);
+	public void verForma(Forma3D f, Luzes luzes) {
+		f = f.translacao(c);
+		rastreamento(f, luzes);
 	}
 	
 	/**
-	 * Para cada pixel da tela, checa se algum ponto do triângulo deve aparecer nele.
-	 * @param t O triângulo a ser exibido
+	 * Para cada pixel da tela, checa se algum ponto da forma deve aparecer nele.
+	 * @param t A forma a ser exibida
 	 */
-	private void rastreamento(Triangulo3D t, Luzes luzes) {
+	private void rastreamento(Forma3D f, Luzes luzes) {
 		for (int i = 0; i < xTela; i++) {
 			for (int j = 0; j < yTela; j++) {
 				Vetor3D x = r.mult((2 * ((double)i / xTela) - 1) * hX);
 				Vetor3D y = n.mult((1 - 2 * ((double)j / yTela)) * hY);
-				Vetor3D ponto = t.colisao(v.soma(x).soma(y));
+				Vetor3D ponto = f.colisao(v.soma(x).soma(y));
 				//Iluminação e definição da luz do ponto
 				if (ponto != null && (zBuffer[i][j] == 0 || zBuffer[i][j] > ponto.z) && ponto.z <= 0) {
-					tela[i][j] = luzes.iluminar(ponto, t.normal(), t.cor).toInt();
+					if (i==100 && j ==100) {
+						System.out.println(ponto);
+						System.out.println("Normal:"+f.normal(ponto));
+					}
+					tela[i][j] = luzes.iluminar(ponto, f.normal(ponto), f.getCor()).toInt();
 					zBuffer[i][j] = ponto.z;
 				}
 			}

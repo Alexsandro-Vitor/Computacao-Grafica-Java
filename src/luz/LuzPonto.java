@@ -40,7 +40,8 @@ public class LuzPonto {
 	 */
 	public Cor iluminar(Vetor3D ponto, Vetor3D normal) {
 		Vetor3D l = (pos.sub(ponto)).normalizado();
-		double inclinacao = (normal.prodEscalar(l) > 0) ? normal.prodEscalar(l) : -normal.prodEscalar(l);
+		//double inclinacao = (normal.prodEscalar(l) > 0) ? normal.prodEscalar(l) : -normal.prodEscalar(l);
+		double inclinacao = normal.prodEscalar(l);
 		return corLuz.prod(kDifuso * inclinacao);
 	}
 }

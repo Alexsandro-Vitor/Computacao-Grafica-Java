@@ -122,7 +122,7 @@ public class Vetor3D {
 	 * @param nome Um nome para identificar o vetor representado
 	 * @return Uma string contendo as coordenadas do vetor
 	 */
-	public String toString(String nome) {
-		return nome + " = (" + this.x + ", " + this.y + ", " + this.z + ")";
+	public String toString() {
+		return "(" + this.x + ", " + this.y + ", " + this.z + ")";
 	}
 }

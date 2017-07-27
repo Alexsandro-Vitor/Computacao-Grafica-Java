@@ -8,7 +8,7 @@ import luz.Cor;
  * @since v0.2.0
  * @author Alexsandro Vítor Serafim de Carvalho - avsc@cin.ufpe.br
  */
-public class Triangulo3D {
+public class Triangulo3D extends Forma3D {
 	/**
 	 * Vértice A do triângulo.
 	 */
@@ -24,14 +24,10 @@ public class Triangulo3D {
 	 */
 	public Vetor3D c;
 	
-	/**
-	 * Cor do triangulo
-	 * @since v0.3.0
-	 */
-	public Cor cor;
+	private Cor cor;
 	
 	/**
-	 * Constrói um triângulo com cor a partir dos seus vértices. Se a cor for null, a triângulo será branco
+	 * Constrói um triângulo com cor a partir dos seus vértices. Se a cor for null, o triângulo será branco.
 	 * @param a Vértice A do triângulo
 	 * @param b Vértice B do triângulo
 	 * @param c Vértice C do triângulo
@@ -46,13 +42,31 @@ public class Triangulo3D {
 	}
 	
 	/**
+	 * A cor do triângulo.
+	 * @since v0.4.0
+	 */
+	public Cor getCor() {
+		return cor;
+	}
+	
+	/**
 	 * Retorna o vetor normal do triângulo. Esse vetor é perpendicular ao plano no qual o triângulo está contido.
 	 * @return O vetor normal do triângulo normalizado
 	 */
-	Vetor3D normal() {
+	public Vetor3D normal() {
 		Vetor3D ab = a.sub(b);
 		Vetor3D ac = a.sub(c);
 		return ab.prodVetorial(ac).normalizado();
+	}
+	
+	/**
+	 * Retorna o vetor normal do triângulo. Esse vetor é perpendicular ao plano no qual o triângulo está contido.
+	 * @param v Não interfere nesta forma em particular
+	 * @return O vetor normal do triângulo normalizado
+	 * @since v0.4.0
+	 */
+	public Vetor3D normal(Vetor3D v) {
+		return normal();
 	}
 	
 	/**

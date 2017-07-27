@@ -102,4 +102,8 @@ public class Cor {
 	public int toInt() {
 		return ((255 * 256 + red) * 256 + green) * 256 + blue;
 	}
+	
+	public String toString() {
+		return "("+red+", "+green+", "+blue+")";
+	}
 }
